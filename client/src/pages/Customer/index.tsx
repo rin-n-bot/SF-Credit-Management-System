@@ -1,181 +1,20 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { SyntheticEvent } from 'react';
-import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { customerService } from '../../services/customer.service';
 import { creditService } from '../../services/credit.service';
 import { peso, toMoney } from '../../utils/format';
 import type { Credit, Customer, CustomerInput } from '../../types/models';
+import SummaryCard from '../../components/SummaryCard';
+import {
+  BalanceFilterSelect,
+  CustomersTable,
+  CustomerFormModal,
+} from './components';
 import './styles.css';
 
 const emptyCustomerForm: CustomerInput = { name: '', contact_no: '', address: '' };
 type BalanceFilter = 'all' | 'with-balance' | 'paid';
-
-
-function FilterSelect({
-  value,
-  onChange,
-  options,
-}: {
-  value: string;
-  onChange: (val: string) => void;
-  options: { label: string; value: string }[];
-}) {
-  const [open, setOpen] = useState(false);
-  const [coords, setCoords] = useState({ top: 0, left: 0, width: 0 });
-  const btnRef = useRef<HTMLButtonElement>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  function handleOpen() {
-    if (!btnRef.current) return;
-    const rect = btnRef.current.getBoundingClientRect();
-    setCoords({
-      top: rect.bottom + window.scrollY + 4,
-      left: rect.left + window.scrollX,
-      width: rect.width,
-    });
-    setOpen((prev) => !prev);
-  }
-
-  useEffect(() => {
-    if (!open) return;
-
-    function handleClickOutside(e: MouseEvent) {
-      if (
-        btnRef.current && !btnRef.current.contains(e.target as Node) &&
-        dropdownRef.current && !dropdownRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false);
-      }
-    }
-
-    function handleScroll() { setOpen(false); }
-
-    document.addEventListener('mousedown', handleClickOutside);
-    window.addEventListener('scroll', handleScroll, true);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      window.removeEventListener('scroll', handleScroll, true);
-    };
-  }, [open]);
-
-  const selected = options.find((o) => o.value === value);
-
-  return (
-    <>
-      <button ref={btnRef} className={`filter-select-btn${open ? ' open' : ''}`} type="button" onClick={handleOpen}>
-        {selected?.label}
-        <span className="filter-chevron">‹</span>
-      </button>
-
-      {open && createPortal(
-        <div
-          ref={dropdownRef}
-          className="filter-dropdown"
-          style={{ position: 'absolute', top: coords.top, left: coords.left, width: coords.width }}
-        >
-          {options.map((opt) => (
-            <button
-              key={opt.value}
-              type="button"
-              className={opt.value === value ? 'active' : ''}
-              onClick={() => { onChange(opt.value); setOpen(false); }}
-            >
-              {opt.label}
-            </button>
-          ))}
-        </div>,
-        document.body,
-      )}
-    </>
-  );
-}
-
-
-function ActionMenu({
-  onView,
-  onEdit,
-  onDelete,
-}: {
-  onView: () => void;
-  onEdit: () => void;
-  onDelete: () => void;
-}) {
-  const [open, setOpen] = useState(false);
-  const [coords, setCoords] = useState({ top: 0, left: 0 });
-  const btnRef = useRef<HTMLButtonElement>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const updateCoords = useCallback(() => {
-    if (!btnRef.current) return;
-    const rect = btnRef.current.getBoundingClientRect();
-    setCoords({
-      top: rect.bottom + window.scrollY + 4,
-      left: rect.right + window.scrollX,
-    });
-  }, []);
-
-  function handleOpen() {
-    updateCoords();
-    setOpen((prev) => !prev);
-  }
-
-  useEffect(() => {
-    if (!open) return;
-
-    function handleClickOutside(e: MouseEvent) {
-      if (
-        btnRef.current && !btnRef.current.contains(e.target as Node) &&
-        dropdownRef.current && !dropdownRef.current.contains(e.target as Node)
-      ) {
-        setOpen(false);
-      }
-    }
-
-    function handleScroll() {
-      setOpen(false);
-    }
-
-    document.addEventListener('mousedown', handleClickOutside);
-    window.addEventListener('scroll', handleScroll, true);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      window.removeEventListener('scroll', handleScroll, true);
-    };
-  }, [open]);
-
-  return (
-    <>
-      <button
-        ref={btnRef}
-        className="action-dots"
-        type="button"
-        onClick={handleOpen}
-      >
-        ⋮
-      </button>
-
-      {open && createPortal(
-        <div
-          ref={dropdownRef}
-          className="action-dropdown"
-          style={{
-            position: 'absolute',
-            top: coords.top,
-            left: coords.left,
-            transform: 'translateX(-100%)',
-          }}
-        >
-          <button type="button" onClick={() => { onView(); setOpen(false); }}>View</button>
-          <button type="button" onClick={() => { onEdit(); setOpen(false); }}>Edit</button>
-          <button type="button" className="danger" onClick={() => { onDelete(); setOpen(false); }}>Delete</button>
-        </div>,
-        document.body,
-      )}
-    </>
-  );
-}
 
 export default function CustomersPage() {
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -369,8 +208,8 @@ export default function CustomersPage() {
   }
 
   return (
-    <div className="page customers-page">
-      <div className="page-header">
+    <div className="customers-page">
+      <div className="customers-header">
         <div>
           <h1>Customers</h1>
           <p>Find customers, check balances, and manage their credit.</p>
@@ -379,27 +218,15 @@ export default function CustomersPage() {
 
       {notice && <div className="notice">{notice}</div>}
 
-      <div className="metric-grid">
-        <div className="metric-card">
-          <span>Total Customers</span>
-          <strong>{summary.totalCustomers}</strong>
-        </div>
-        <div className="metric-card">
-          <span>With Balance</span>
-          <strong>{summary.customersWithBalance}</strong>
-        </div>
-        <div className="metric-card">
-          <span>Paid Customers</span>
-          <strong>{summary.paidCustomers}</strong>
-        </div>
-        <div className="metric-card primary">
-          <span>Total Outstanding</span>
-          <strong>{peso(summary.totalOutstanding)}</strong>
-        </div>
+      <div className="customers-summary-grid">
+        <SummaryCard label="Total Customers" value={summary.totalCustomers} />
+        <SummaryCard label="With Balance" value={summary.customersWithBalance} />
+        <SummaryCard label="Paid Customers" value={summary.paidCustomers} />
+        <SummaryCard label="Total Outstanding" value={peso(summary.totalOutstanding)} variant="primary" />
       </div>
 
-      <div className="content-card">
-        <div className="content-card-header">
+      <div className="customers-content">
+        <div className="customers-content-header">
           <div>
             <h2>All Customers</h2>
             <p className="count">
@@ -415,7 +242,7 @@ export default function CustomersPage() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
 
-            <FilterSelect
+            <BalanceFilterSelect
               value={balanceFilter}
               onChange={(val) => setBalanceFilter(val as BalanceFilter)}
               options={[
@@ -440,114 +267,23 @@ export default function CustomersPage() {
           </div>
         </div>
 
-        <div className="table-container">
-          <table className="data-table customers-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Contact</th>
-                <th>Address</th>
-                <th>Balance</th>
-                <th>Status</th>
-                <th className="th-action">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredCustomers.map((customer) => {
-                const balance = balanceByCustomer[customer.customer_id] || 0;
-
-                return (
-                  <tr key={customer.customer_id}>
-                    <td>CUST-{String(customer.customer_id).padStart(4, '0')}</td>
-                    <td>{customer.name}</td>
-                    <td>{customer.contact_no}</td>
-                    <td title={customer.address || 'No address'}>
-                      {customer.address || 'No address'}
-                    </td>
-                    <td className={balance > 0 ? 'balance-due' : ''}>{peso(balance)}</td>
-                    <td>
-                      <span className={balance > 0 ? 'badge active' : 'badge paid'}>
-                        {balance > 0 ? 'Active' : 'Paid'}
-                      </span>
-                    </td>
-                    <td className="td-action">
-                      <ActionMenu
-                        onView={() => navigate(`/customers/${customer.customer_id}`)}
-                        onEdit={() => openEditModal(customer)}
-                        onDelete={() => handleDeleteCustomer(customer)}
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
-
-              {filteredCustomers.length === 0 && (
-                <tr>
-                  <td colSpan={7} className="empty">
-                    No customers found.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+        <CustomersTable
+          customers={filteredCustomers}
+          balanceByCustomer={balanceByCustomer}
+          onView={(customer) => navigate(`/customers/${customer.customer_id}`)}
+          onEdit={openEditModal}
+          onDelete={handleDeleteCustomer}
+        />
       </div>
 
-      {showModal && (
-        <div className="modal-backdrop">
-          <div className="modal">
-            <div className="modal-header">
-              <h2>{editingCustomer ? 'Edit Customer' : 'Add New Customer'}</h2>
-              <button type="button" onClick={closeModal}>
-                x
-              </button>
-            </div>
-
-            <form onSubmit={handleSaveCustomer}>
-              <label>
-                Full Name
-                <input
-                  value={customerForm.name}
-                  onChange={(e) =>
-                    setCustomerForm({ ...customerForm, name: e.target.value })
-                  }
-                  required
-                />
-              </label>
-
-              <label>
-                Contact No.
-                <input
-                  value={customerForm.contact_no}
-                  onChange={(e) =>
-                    setCustomerForm({ ...customerForm, contact_no: e.target.value })
-                  }
-                  required
-                />
-              </label>
-
-              <label>
-                Address
-                <textarea
-                  value={customerForm.address || ''}
-                  onChange={(e) =>
-                    setCustomerForm({ ...customerForm, address: e.target.value })
-                  }
-                  rows={3}
-                />
-              </label>
-
-              <div className="modal-actions">
-                <button type="button" onClick={closeModal}>
-                  Cancel
-                </button>
-                <button type="submit">{editingCustomer ? 'Save Changes' : 'Save'}</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      <CustomerFormModal
+        isOpen={showModal}
+        editingCustomer={editingCustomer}
+        formData={customerForm}
+        onFormChange={setCustomerForm}
+        onClose={closeModal}
+        onSubmit={handleSaveCustomer}
+      />
     </div>
   );
 }
