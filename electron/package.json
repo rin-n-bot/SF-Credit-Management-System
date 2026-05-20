@@ -1,0 +1,15 @@
+{
+  "name": "sf-credit-system-electron",
+  "version": "1.0.0",
+  "main": "src/main.js",
+  "type": "module",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^16.4.5",
+    "electron": "^31.1.0",
+    "pg": "^8.20.0"
+  }
+}

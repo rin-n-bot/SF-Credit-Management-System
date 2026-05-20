@@ -1,0 +1,24 @@
+:root {
+  /* Primary colors */
+  --color-primary: #141414;
+  --color-primary-hover: #5b50e6;
+  --color-accent: #5b50e6;
+  --color-low-opacity: #ffffff14;
+  
+  /* Text colors */
+  --color-text-dark: #12172a;
+  --color-text-medium: #20263a;
+  --color-text-muted: #5f667a;
+  --color-text-light: #6b7280;
+  --color-footer: #8a91a3;
+  
+  /* Border & input */
+  --color-border: #dce0ea;
+  
+  /* Status */
+  --color-error: #d92d20;
+  
+  /* Backgrounds */
+  --color-white: #ffffff;
+  --color-page-bg: white;
+}
