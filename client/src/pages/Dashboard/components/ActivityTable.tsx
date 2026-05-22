@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react';
-import SectionCard from '../../../../components/SectionCard';
-import './ActivityTable.css';
+import SectionCard from '../../../components/SectionCard';
 
 interface Column<T> {
   label: string;
@@ -29,17 +28,26 @@ export default function ActivityTable<T>({
       title={title}
       action={
         onViewAll && (
-          <button type="button" className="activity-table__view-all" onClick={onViewAll}>
+          <button
+            type="button"
+            onClick={onViewAll}
+            className="bg-transparent border-0 text-[#141414] text-xs font-bold cursor-pointer hover:text-[#5b50e6] hover:underline p-0"
+          >
             View all
           </button>
         )
       }
     >
-      <table className="activity-table">
+      <table className="w-full border-collapse">
         <thead>
           <tr>
             {columns.map((col) => (
-              <th key={col.label}>{col.label}</th>
+              <th
+                key={col.label}
+                className="px-[6px] py-2 border-b border-[#edf0f5] text-left text-xs text-[#5f667a] font-extrabold"
+              >
+                {col.label}
+              </th>
             ))}
           </tr>
         </thead>
@@ -47,14 +55,22 @@ export default function ActivityTable<T>({
           {rows.map((row) => (
             <tr key={keyExtractor(row)}>
               {columns.map((col) => (
-                <td key={col.label}>{col.render(row)}</td>
+                <td
+                  key={col.label}
+                  className="px-[6px] py-2 border-b border-[#edf0f5] text-left text-xs text-[#12172a] font-medium"
+                >
+                  {col.render(row)}
+                </td>
               ))}
             </tr>
           ))}
 
           {rows.length === 0 && (
             <tr>
-              <td colSpan={columns.length} className="activity-table__empty">
+              <td
+                colSpan={columns.length}
+                className="px-[6px] py-7 text-center text-xs text-[#6b7280]"
+              >
                 {emptyMessage}
               </td>
             </tr>

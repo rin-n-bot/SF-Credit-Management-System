@@ -6,9 +6,9 @@ import { creditService } from '../../services/credit.service';
 import { paymentService } from '../../services/payment.service';
 import { formatDate, peso, toMoney } from '../../utils/format';
 import type { Credit, Customer, Payment } from '../../types/models';
+import AppLayout from '../../layout/AppLayout';
 import SummaryCard from '../../components/SummaryCard';
 import ActivityTable from './components/ActivityTable';
-import './styles.css';
 
 function isCreditOverdue(credit: Credit) {
   const remainingBalance = toMoney(credit.remaining_balance);
@@ -55,9 +55,7 @@ export default function DashboardPage() {
 
     loadDashboard();
 
-    return () => {
-      mounted = false;
-    };
+    return () => { mounted = false; };
   }, []);
 
   const customerMap = useMemo(() => {
@@ -109,9 +107,7 @@ export default function DashboardPage() {
     return [...payments]
       .sort((a, b) => {
         const dateDiff = new Date(b.pay_date).getTime() - new Date(a.pay_date).getTime();
-
         if (dateDiff !== 0) return dateDiff;
-
         return b.payment_id - a.payment_id;
       })
       .slice(0, 5);
@@ -143,15 +139,20 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="dashboard">
-      <div className="dashboard-header">
+    <AppLayout>
+      {/* ── Header ── */}
+      <div className="flex justify-between items-start mb-8 flex-wrap gap-4">
         <div>
-          <h1>Dashboard</h1>
-          <p>Welcome back, {user?.full_name || 'Admin User'}.</p>
-          <p>Here's what's happening with your store today.</p>
+          <h1 className="m-0 text-2xl font-bold text-[#12172a]">Dashboard</h1>
+          <p className="mt-[6px] mb-0 text-[#5f667a] text-sm">
+            Welcome back, {user?.full_name || 'Admin User'}.
+          </p>
+          <p className="mt-[6px] mb-0 text-[#5f667a] text-sm">
+            Here's what's happening with your store today.
+          </p>
         </div>
 
-        <div className="header-meta">
+        <div className="flex gap-[18px] text-[#6b7280] text-xs items-center">
           <span>
             {new Date().toLocaleDateString('en-PH', {
               month: 'short',
@@ -159,14 +160,16 @@ export default function DashboardPage() {
               year: 'numeric',
             })}
           </span>
-          <strong>{user?.username || 'Owner'}</strong>
+          <strong className="text-[#12172a]">{user?.username || 'Owner'}</strong>
         </div>
       </div>
 
-      <section className="dashboard-section">
-        <h2 className="dashboard-section__title">Overview</h2>
-
-        <div className="summary-grid">
+      {/* ── Overview ── */}
+      <section className="mb-8">
+        <h2 className="text-sm font-bold tracking-[0.07em] uppercase text-[#5f667a] m-0 mb-4">
+          Overview
+        </h2>
+        <div className="grid grid-cols-4 gap-[18px] max-[1100px]:grid-cols-2 max-[760px]:grid-cols-1">
           <SummaryCard
             label="Total Customers"
             value={dashboardSummary.totalCustomers}
@@ -193,10 +196,12 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      <section className="dashboard-section">
-        <h2 className="dashboard-section__title">This Month</h2>
-
-        <div className="monthly-grid">
+      {/* ── This Month ── */}
+      <section className="mb-8">
+        <h2 className="text-sm font-bold tracking-[0.07em] uppercase text-[#5f667a] m-0 mb-4">
+          This Month
+        </h2>
+        <div className="grid grid-cols-2 gap-[18px] max-[760px]:grid-cols-1">
           <SummaryCard
             label="New Credits This Month"
             value={peso(dashboardSummary.monthCreditsAdded)}
@@ -212,10 +217,12 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      <section className="dashboard-section">
-        <h2 className="dashboard-section__title">Recent Activity</h2>
-
-        <div className="activity-grid">
+      {/* ── Recent Activity ── */}
+      <section className="mb-8">
+        <h2 className="text-sm font-bold tracking-[0.07em] uppercase text-[#5f667a] m-0 mb-4">
+          Recent Activity
+        </h2>
+        <div className="grid grid-cols-3 gap-[18px] max-[1100px]:grid-cols-2 max-[760px]:grid-cols-1">
           <ActivityTable
             title="Recent Credits"
             columns={[
@@ -255,6 +262,6 @@ export default function DashboardPage() {
           />
         </div>
       </section>
-    </div>
+    </AppLayout>
   );
 }

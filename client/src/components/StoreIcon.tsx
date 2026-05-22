@@ -1,7 +1,7 @@
 export default function StoreIcon() {
   return (
     <svg
-      className="store-icon"
+      className="block w-[76px] mx-auto mb-[18px]"
       viewBox="0 0 76 66"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
@@ -24,7 +24,6 @@ export default function StoreIcon() {
         <line x1="50" y1="30" x2="72" y2="0" stroke="white" strokeWidth="10" />
         <line x1="68" y1="30" x2="90" y2="0" stroke="white" strokeWidth="10" />
       </g>
-      {/* Awning lip */}
       <rect x="0" y="26" width="76" height="5" fill="var(--color-accent)" />
 
       {/* Facade */}
@@ -44,7 +43,7 @@ export default function StoreIcon() {
         <rect x="22" y="39" width="5" height="7" rx="1" fill="#4A90D9" />
         <rect x="30" y="37" width="4" height="9" rx="1" fill="#6BBF7A" />
         <rect x="37" y="38" width="6" height="8" rx="1" fill="#F5A623" />
-        <rect x="46" y="40" width="7" height="5"  rx="1" fill="#B0B0C0" />
+        <rect x="46" y="40" width="7" height="5" rx="1" fill="#B0B0C0" />
         <rect x="56" y="38" width="5" height="8" rx="1" fill="#9B59B6" />
       </g>
 

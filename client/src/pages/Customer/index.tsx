@@ -5,16 +5,21 @@ import { customerService } from '../../services/customer.service';
 import { creditService } from '../../services/credit.service';
 import { peso, toMoney } from '../../utils/format';
 import type { Credit, Customer, CustomerInput } from '../../types/models';
+import AppLayout from '../../layout/AppLayout';
 import SummaryCard from '../../components/SummaryCard';
-import {
-  BalanceFilterSelect,
-  CustomersTable,
-  CustomerFormModal,
-} from './components';
-import './styles.css';
+import SectionCard from '../../components/SectionCard';
+import BalanceFilterSelect from './components/BalanceFilterSelect';
+import CustomersTable from './components/CustomersTable';
+import CustomerFormModal from './components/CustomerFormModal';
 
 const emptyCustomerForm: CustomerInput = { name: '', contact_no: '', address: '' };
 type BalanceFilter = 'all' | 'with-balance' | 'paid';
+
+const balanceFilterOptions = [
+  { label: 'All', value: 'all' },
+  { label: 'With Balance', value: 'with-balance' },
+  { label: 'Paid', value: 'paid' },
+];
 
 export default function CustomersPage() {
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -33,7 +38,6 @@ export default function CustomersPage() {
       customerService.getAll(),
       creditService.getAll(),
     ]);
-
     setCustomers(customerRows);
     setCredits(creditRows);
   }, []);
@@ -46,27 +50,18 @@ export default function CustomersPage() {
         customerService.getAll(),
         creditService.getAll(),
       ]);
-
       if (!mounted) return;
-
       setCustomers(customerRows);
       setCredits(creditRows);
     }
 
     loadMountedData();
-
-    return () => {
-      mounted = false;
-    };
+    return () => { mounted = false; };
   }, []);
 
   useEffect(() => {
     if (!notice) return;
-
-    const timeout = window.setTimeout(() => {
-      setNotice('');
-    }, 3500);
-
+    const timeout = window.setTimeout(() => setNotice(''), 3500);
     return () => window.clearTimeout(timeout);
   }, [notice]);
 
@@ -74,7 +69,6 @@ export default function CustomersPage() {
     return credits.reduce<Record<number, number>>((balances, credit) => {
       balances[credit.customer_id] =
         (balances[credit.customer_id] || 0) + toMoney(credit.remaining_balance);
-
       return balances;
     }, {});
   }, [credits]);
@@ -109,8 +103,7 @@ export default function CustomersPage() {
     if (!sortByHighestBalance) return filtered;
 
     return [...filtered].sort(
-      (a, b) =>
-        (balanceByCustomer[b.customer_id] || 0) - (balanceByCustomer[a.customer_id] || 0),
+      (a, b) => (balanceByCustomer[b.customer_id] || 0) - (balanceByCustomer[a.customer_id] || 0),
     );
   }, [balanceByCustomer, balanceFilter, customers, searchTerm, sortByHighestBalance]);
 
@@ -119,7 +112,6 @@ export default function CustomersPage() {
       (sum, customer) => sum + (balanceByCustomer[customer.customer_id] || 0),
       0,
     );
-
     const customersWithBalance = customers.filter(
       (customer) => (balanceByCustomer[customer.customer_id] || 0) > 0,
     ).length;
@@ -165,7 +157,6 @@ export default function CustomersPage() {
           contact_no: customerForm.contact_no.trim(),
           address: customerForm.address?.trim() || null,
         });
-
         setNotice('Customer updated successfully.');
       } else {
         await customerService.add({
@@ -173,7 +164,6 @@ export default function CustomersPage() {
           contact_no: customerForm.contact_no.trim(),
           address: customerForm.address?.trim() || null,
         });
-
         setNotice('Customer added successfully.');
       }
 
@@ -186,9 +176,9 @@ export default function CustomersPage() {
   }
 
   async function handleDeleteCustomer(customer: Customer) {
-    const customerCreditCount = creditCountByCustomer[customer.customer_id] || 0;
+    const creditCount = creditCountByCustomer[customer.customer_id] || 0;
 
-    if (customerCreditCount > 0) {
+    if (creditCount > 0) {
       setNotice('Customer has credit records. Keep the profile for audit history.');
       return;
     }
@@ -208,64 +198,70 @@ export default function CustomersPage() {
   }
 
   return (
-    <div className="customers-page">
-      <div className="customers-header">
-        <div>
-          <h1>Customers</h1>
-          <p>Find customers, check balances, and manage their credit.</p>
+    <AppLayout>
+      {/* ── Page header ── */}
+      <div className="mb-8">
+        <h1 className="m-0 text-2xl font-bold text-[#12172a]">Customers</h1>
+        <p className="mt-[6px] mb-0 text-[#5f667a] text-sm">
+          Find customers, check balances, and manage their credit.
+        </p>
+      </div>
+
+      {/* ── Notice banner ── */}
+      {notice && (
+        <div className="bg-[#f4f2ff] border border-[#d8d3ff] rounded-[6px] px-4 py-3 text-[#5b50e6] font-bold mb-6">
+          {notice}
         </div>
+      )}
+
+      {/* ── Summary cards ── */}
+      <div className="grid grid-cols-4 gap-[18px] mb-8 max-[1100px]:grid-cols-2 max-[760px]:grid-cols-1">
+        <SummaryCard label="Total Customers" value={summary.totalCustomers} sub="All customers" />
+        <SummaryCard label="With Balance" value={summary.customersWithBalance} sub="Active credit" variant="warning" />
+        <SummaryCard label="Paid Customers" value={summary.paidCustomers} sub="No outstanding balance" variant="success" />
+        <SummaryCard label="Total Outstanding" value={peso(summary.totalOutstanding)} sub="Total unpaid" variant="primary" />
       </div>
 
-      {notice && <div className="notice">{notice}</div>}
-
-      <div className="customers-summary-grid">
-        <SummaryCard label="Total Customers" value={summary.totalCustomers} />
-        <SummaryCard label="With Balance" value={summary.customersWithBalance} />
-        <SummaryCard label="Paid Customers" value={summary.paidCustomers} />
-        <SummaryCard label="Total Outstanding" value={peso(summary.totalOutstanding)} variant="primary" />
-      </div>
-
-      <div className="customers-content">
-        <div className="customers-content-header">
-          <div>
-            <h2>All Customers</h2>
-            <p className="count">
-              Showing {filteredCustomers.length} of {customers.length} customers
-            </p>
-          </div>
-
-          <div className="actions">
+      {/* ── Customers table card ── */}
+      <SectionCard
+        title="All Customers"
+        action={
+          <div className="flex gap-3 items-center flex-wrap">
             <input
-              className="search"
               placeholder="Search by name, contact, or address..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              className="h-[38px] w-[260px] border border-[#dce0ea] rounded-[6px] px-3 text-[13px] bg-white text-[#12172a] outline-none focus:border-[#5b50e6] max-[900px]:w-full"
             />
 
             <BalanceFilterSelect
               value={balanceFilter}
               onChange={(val) => setBalanceFilter(val as BalanceFilter)}
-              options={[
-                { label: 'All', value: 'all' },
-                { label: 'With Balance', value: 'with-balance' },
-                { label: 'Paid', value: 'paid' },
-              ]}
+              options={balanceFilterOptions}
             />
 
-            <label className="sort-toggle">
+            <label className="h-[38px] inline-flex items-center gap-2 border border-[#dce0ea] rounded-[6px] px-3 bg-white text-[#12172a] text-[13px] font-bold cursor-pointer focus-within:border-[#5b50e6]">
               <input
                 type="checkbox"
                 checked={sortByHighestBalance}
                 onChange={(e) => setSortByHighestBalance(e.target.checked)}
+                className="w-[15px] h-[15px] accent-[#5b50e6] cursor-pointer"
               />
               Highest balance
             </label>
 
-            <button className="btn-primary" onClick={openAddModal}>
+            <button
+              onClick={openAddModal}
+              className="h-[38px] border-0 rounded-[6px] px-4 bg-[#141414] text-white text-[13px] font-bold cursor-pointer hover:bg-[#5b50e6]"
+            >
               + Add Customer
             </button>
           </div>
-        </div>
+        }
+      >
+        <p className="m-0 mb-3 text-xs text-[#6b7280]">
+          Showing {filteredCustomers.length} of {customers.length} customers
+        </p>
 
         <CustomersTable
           customers={filteredCustomers}
@@ -274,8 +270,9 @@ export default function CustomersPage() {
           onEdit={openEditModal}
           onDelete={handleDeleteCustomer}
         />
-      </div>
+      </SectionCard>
 
+      {/* ── Add / Edit customer modal ── */}
       <CustomerFormModal
         isOpen={showModal}
         editingCustomer={editingCustomer}
@@ -284,6 +281,6 @@ export default function CustomersPage() {
         onClose={closeModal}
         onSubmit={handleSaveCustomer}
       />
-    </div>
+    </AppLayout>
   );
 }

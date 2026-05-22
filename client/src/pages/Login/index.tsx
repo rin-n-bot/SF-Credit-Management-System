@@ -3,7 +3,6 @@ import type { SyntheticEvent } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import StoreIcon from '../../components/StoreIcon';
-import '../../styles/auth.css';
 
 export default function LoginPage() {
   const { login, isAuthenticated } = useAuth();
@@ -42,18 +41,22 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="auth-page">
-      <section className="auth-card">
+    <main className="min-h-screen grid place-items-center p-8 bg-white text-[#12172a]">
+      <section className="w-[360px] max-w-full px-7 pt-[34px] pb-6 mb-20">
 
         <StoreIcon />
 
-        <div className="auth-heading">
-          <h1>SF Sari-Sari Store</h1>
-          <p>Credit Management System</p>
+        <div className="text-center mt-[18px]">
+          <h1 className="m-0 text-2xl leading-tight font-extrabold">
+            SF Sari-Sari Store
+          </h1>
+          <p className="mt-2 text-[#5f667a] text-[13px] font-semibold">
+            Credit Management System
+          </p>
         </div>
 
-        <form className="auth-form" onSubmit={handleSubmit}>
-          <label>
+        <form className="grid gap-[14px] mt-[26px]" onSubmit={handleSubmit}>
+          <label className="grid gap-[7px] text-[#20263a] text-xs font-medium">
             Username
             <input
               value={username}
@@ -61,10 +64,11 @@ export default function LoginPage() {
               placeholder="Enter username"
               autoComplete="username"
               required
+              className="h-10 border border-[#dce0ea] rounded-md px-3 bg-white text-[#12172a] text-[13px] outline-none focus:border-[#5b50e6] focus:ring-2 focus:ring-white focus:rounded-lg"
             />
           </label>
 
-          <label>
+          <label className="grid gap-[7px] text-[#20263a] text-xs font-medium">
             Password
             <input
               type="password"
@@ -73,35 +77,51 @@ export default function LoginPage() {
               placeholder="Enter password"
               autoComplete="current-password"
               required
+              className="h-10 border border-[#dce0ea] rounded-md px-3 bg-white text-[#12172a] text-[13px] outline-none focus:border-[#5b50e6] focus:ring-2 focus:ring-white focus:rounded-lg"
             />
           </label>
 
-          <label className="remember-row">
+          <label className="flex items-center gap-2 text-[#5f667a] text-xs font-semibold">
             <input
               type="checkbox"
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
+              className="w-[14px] h-[14px] accent-[#5b50e6]"
             />
             Remember me
           </label>
 
-          {message && <p className="auth-error">{message}</p>}
+          {message && (
+            <p className="m-0 text-[#d92d20] text-xs leading-snug">{message}</p>
+          )}
 
-          <button type="submit" disabled={isSubmitting}>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="h-[42px] rounded-md bg-[#141414] text-white text-[13px] font-extrabold cursor-pointer hover:bg-[#5b50e6] active:scale-[0.98] transition-colors duration-200 disabled:opacity-65 disabled:bg-[#5b50e6] disabled:cursor-wait"
+          >
             {isSubmitting ? (
-              <span className="spinner"></span>
+              <span className="inline-block w-[18px] h-[18px] border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : (
               'Log In'
             )}
           </button>
         </form>
 
-        <p className="register-link">
-          First time setup? <Link to="/register">Create owner account</Link>
+        <p className="mt-[18px] text-[#6b7280] text-xs text-center">
+          First time setup?{' '}
+          <Link
+            to="/register"
+            className="text-[#141414] font-extrabold hover:text-[#5b50e6] hover:underline transition-all duration-200"
+          >
+            Create owner account
+          </Link>
         </p>
       </section>
 
-      <p className="auth-footer">© 2026 SF Sari-Sari Store. All rights reserved.</p>
+      <p className="fixed bottom-7 text-[#8a91a3] text-[11px]">
+        © 2026 SF Sari-Sari Store. All rights reserved.
+      </p>
     </main>
   );
 }
