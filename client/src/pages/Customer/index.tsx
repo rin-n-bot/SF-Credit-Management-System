@@ -202,14 +202,14 @@ export default function CustomersPage() {
       {/* ── Page header ── */}
       <div className="mb-8">
         <h1 className="m-0 text-2xl font-bold text-[#12172a]">Customers</h1>
-        <p className="mt-[6px] mb-0 text-[#5f667a] text-sm">
+        <p className="mt-[6px] mb-0 text-[#5f667a] text-sm font-medium">
           Find customers, check balances, and manage their credit.
         </p>
       </div>
 
       {/* ── Notice banner ── */}
       {notice && (
-        <div className="bg-[#f4f2ff] border border-[#d8d3ff] rounded-[6px] px-4 py-3 text-[#5b50e6] font-bold mb-6">
+        <div className="bg-[#f4f2ff] border border-[#d8d3ff] rounded-[6px] px-4 py-3 text-[#5b50e6] font-medium mb-6">
           {notice}
         </div>
       )}
@@ -231,7 +231,7 @@ export default function CustomersPage() {
               placeholder="Search by name, contact, or address..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="h-[38px] w-[260px] border border-[#dce0ea] rounded-[6px] px-3 text-[13px] bg-white text-[#12172a] outline-none focus:border-[#5b50e6] max-[900px]:w-full"
+              className="h-[38px] w-[260px] border border-[#dce0ea] rounded-md px-3 text-xs bg-white text-[#12172a] outline-none focus:border-[#5b50e6] max-[900px]:w-full"
             />
 
             <BalanceFilterSelect
@@ -240,7 +240,7 @@ export default function CustomersPage() {
               options={balanceFilterOptions}
             />
 
-            <label className="h-[38px] inline-flex items-center gap-2 border border-[#dce0ea] rounded-[6px] px-3 bg-white text-[#12172a] text-[13px] font-bold cursor-pointer focus-within:border-[#5b50e6]">
+            <label className="h-[38px] inline-flex items-center gap-2 border border-[#dce0ea] rounded-md px-3 bg-white text-[#12172a] text-xs font-semibold cursor-pointer focus-within:border-[#5b50e6]">
               <input
                 type="checkbox"
                 checked={sortByHighestBalance}
@@ -252,7 +252,7 @@ export default function CustomersPage() {
 
             <button
               onClick={openAddModal}
-              className="h-[38px] border-0 rounded-[6px] px-4 bg-[#141414] text-white text-[13px] font-bold cursor-pointer hover:bg-[#5b50e6]"
+              className="h-[38px] border-0 rounded-md px-4 bg-[#141414] text-white text-xs font-semibold cursor-pointer hover:bg-[#5b50e6]"
             >
               + Add Customer
             </button>

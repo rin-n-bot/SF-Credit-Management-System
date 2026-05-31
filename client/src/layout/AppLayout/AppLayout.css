@@ -2,6 +2,8 @@
   display: flex;
   min-height: 100vh;
   background: var(--color-bg);
+  padding: 24px;
+  box-sizing: border-box;
 }
 
 .app-layout__main {

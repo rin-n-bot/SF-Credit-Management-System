@@ -11,6 +11,7 @@ import CreditTable from './components/CreditTable';
 import PaymentHistoryTable from './components/PaymentHistoryTable';
 import AddCreditModal from './components/AddCreditModal';
 import RecordPaymentModal from './components/RecordPaymentModal';
+import { useBreadcrumb } from '../../context/breadcrumbContext';
 
 const emptyCreditItem: CreditItemDraft = { item_name: '', quantity: 1, price: 0 };
 
@@ -47,6 +48,7 @@ export default function CustomerDetailsPage() {
   const [showAddCreditModal, setShowAddCreditModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [notice, setNotice] = useState('');
+  const { setCustomLabel } = useBreadcrumb();
 
   const [creditForm, setCreditForm] = useState({
     trans_date: todayInputValue(),
@@ -103,6 +105,11 @@ export default function CustomerDetailsPage() {
     const timeout = window.setTimeout(() => setNotice(''), 3500);
     return () => window.clearTimeout(timeout);
   }, [notice]);
+
+useEffect(() => {
+  if (customer?.name) setCustomLabel(customer.name);
+  return () => setCustomLabel(null);
+}, [customer?.name, setCustomLabel]);
 
   const creditFormTotal = useMemo(() => {
     return creditItems.reduce(
@@ -226,13 +233,13 @@ export default function CustomerDetailsPage() {
 
         <div className="flex gap-2.5">
           <button
-            className="h-[38px] rounded-md px-4 text-[13px] font-extrabold cursor-pointer border border-[var(--color-border)] bg-white text-[var(--color-primary)] hover:text-[var(--color-primary-hover)]"
+            className="h-[38px] rounded-md px-4 text-xs font-bold cursor-pointer border border-[var(--color-border)] bg-white text-[var(--color-primary)] hover:text-[var(--color-primary-hover)]"
             onClick={() => setShowAddCreditModal(true)}
           >
             Add Credit
           </button>
           <button
-            className="h-[38px] rounded-md px-4 text-[13px] font-extrabold cursor-pointer border-0 bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] disabled:opacity-55 disabled:cursor-not-allowed"
+            className="h-[38px] rounded-md px-4 text-xs font-medium cursor-pointer border-0 bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-hover)] disabled:opacity-55 disabled:cursor-not-allowed"
             onClick={() => setShowPaymentModal(true)}
             disabled={accountSummary.totalBalance <= 0}
           >

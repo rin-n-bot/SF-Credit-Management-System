@@ -31,7 +31,7 @@ export default function ActivityTable<T>({
           <button
             type="button"
             onClick={onViewAll}
-            className="bg-transparent border-0 text-[#141414] text-xs font-bold cursor-pointer hover:text-[#5b50e6] hover:underline p-0"
+            className="bg-transparent border-0 text-[#141414] underline p-0 text-[13px] font-bold cursor-pointer hover:text-[#5b50e6]"
           >
             View all
           </button>
@@ -44,7 +44,7 @@ export default function ActivityTable<T>({
             {columns.map((col) => (
               <th
                 key={col.label}
-                className="px-[6px] py-2 border-b border-[#edf0f5] text-left text-xs text-[#5f667a] font-extrabold"
+                className="px-[6px] py-2 border-b border-[#edf0f5] text-left text-sm text-[#5f667a] font-semibold"
               >
                 {col.label}
               </th>
@@ -57,7 +57,7 @@ export default function ActivityTable<T>({
               {columns.map((col) => (
                 <td
                   key={col.label}
-                  className="px-[6px] py-2 border-b border-[#edf0f5] text-left text-xs text-[#12172a] font-medium"
+                  className="px-[6px] py-2 border-b border-[#edf0f5] text-left text-[13px] text-[#12172a] font-medium"
                 >
                   {col.render(row)}
                 </td>
@@ -69,7 +69,7 @@ export default function ActivityTable<T>({
             <tr>
               <td
                 colSpan={columns.length}
-                className="px-[6px] py-7 text-center text-xs text-[#6b7280]"
+                className="px-[6px] py-7 text-center text-sm text-[#6b7280]"
               >
                 {emptyMessage}
               </td>

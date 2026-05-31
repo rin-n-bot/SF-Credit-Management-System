@@ -109,7 +109,7 @@ export default function CreditTable({
                       {peso(getCreditPaidAmount(credit))}
                     </td>
                     <td
-                      className={`px-1.5 py-2 border-b border-[#edf0f5] text-xs font-medium ${
+                      className={`px-1.5 py-2 border-b border-[#edf0f5] text-sm font-bold ${
                         toMoney(credit.remaining_balance) > 0
                           ? 'text-[var(--color-error)] font-black'
                           : 'text-[var(--color-text-dark)]'
@@ -122,7 +122,7 @@ export default function CreditTable({
                     </td>
                     <td className="px-1.5 py-2 border-b border-[#edf0f5] text-xs text-[var(--color-text-dark)] font-medium">
                       <button
-                        className="border-0 bg-transparent text-[var(--color-primary-hover)] font-extrabold cursor-pointer p-0 text-xs hover:underline"
+                        className="border-0 bg-transparent text-[var(--color-primary)] underline font-extrabold cursor-pointer p-0 text-xs hover:text-[var(--color-primary-hover)] hover:underline"
                         onClick={() => toggleCreditItems(credit.credit_id)}
                       >
                         {isExpanded ? 'Hide' : 'View'}

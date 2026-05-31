@@ -17,12 +17,12 @@ const valueColorMap = {
 
 export default function SummaryCard({ label, value, sub, variant = 'default' }: SummaryCardProps) {
   return (
-    <div className="bg-white border border-[#dce0ea] rounded-[6px] p-5">
-      <span className="block text-[#5f667a] text-sm font-bold">{label}</span>
-      <strong className={`block text-[28px] font-bold my-[6px] ${valueColorMap[variant]}`}>
+    <div className="bg-white border border-[#dce0ea] rounded-md p-5">
+      <span className="block text-[#5f667a] text-sm font-semibold">{label}</span>
+      <strong className={`block text-2xl font-bold my-[6px] ${valueColorMap[variant]}`}>
         {value}
       </strong>
-      {sub && <small className="block text-[#6b7280] text-xs">{sub}</small>}
+      {sub && <small className="block text-[#6b7280] text-xs font-medium">{sub}</small>}
     </div>
   );
 }

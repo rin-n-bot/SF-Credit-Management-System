@@ -76,10 +76,10 @@ export default function AddCreditModal({
           <h2 className="m-0 text-lg font-black">Add Credit</h2>
           <button
             type="button"
-            className="border-0 bg-transparent cursor-pointer text-xl leading-none"
+            className="border-0 bg-transparent cursor-pointer text-2xl leading-none"
             onClick={closeCreditModal}
           >
-            x
+            ×
           </button>
         </div>
 
@@ -94,7 +94,7 @@ export default function AddCreditModal({
                 value={creditForm.trans_date}
                 onChange={(e) => setCreditForm({ ...creditForm, trans_date: e.target.value })}
                 required
-                className="border border-[var(--color-border)] rounded-md p-2.5 text-[13px] font-normal"
+                className="h-10 border border-[#dce0ea] rounded-md px-3 bg-white text-[#12172a] text-[13px] outline-none focus:border-[var(--color-primary-hover)] focus:ring-2 focus:ring-white focus:rounded-lg"
               />
             </label>
             <label className="flex flex-col gap-1.5 text-xs font-extrabold">
@@ -104,7 +104,7 @@ export default function AddCreditModal({
                 value={creditForm.due_date}
                 onChange={(e) => setCreditForm({ ...creditForm, due_date: e.target.value })}
                 required
-                className="border border-[var(--color-border)] rounded-md p-2.5 text-[13px] font-normal"
+                className="h-10 border border-[#dce0ea] rounded-md px-3 bg-white text-[#12172a] text-[13px] outline-none focus:border-[var(--color-primary-hover)] focus:ring-2 focus:ring-white focus:rounded-lg"
               />
             </label>
           </div>
@@ -121,11 +121,11 @@ export default function AddCreditModal({
                 style={{ gridTemplateColumns: '1fr 90px 120px 110px 34px' }}
               >
                 <input
-                  placeholder="Item name"
+                  placeholder="eg. Sardines, Beer, Noodles etc.."
                   value={item.item_name}
                   onChange={(e) => updateCreditItem(index, 'item_name', e.target.value)}
                   required
-                  className="border border-[var(--color-border)] rounded-md p-2.5 text-[13px]"
+                  className="h-10 border border-[#dce0ea] rounded-md px-3 bg-white text-[#12172a] text-[13px] outline-none focus:border-[var(--color-primary-hover)] focus:ring-2 focus:ring-white focus:rounded-lg"
                 />
                 <input
                   type="number"
@@ -133,7 +133,7 @@ export default function AddCreditModal({
                   value={item.quantity}
                   onChange={(e) => updateCreditItem(index, 'quantity', e.target.value)}
                   required
-                  className="border border-[var(--color-border)] rounded-md p-2.5 text-[13px]"
+                  className="h-10 border border-[#dce0ea] rounded-md px-3 bg-white text-[#12172a] text-[13px] outline-none focus:border-[var(--color-primary-hover)] focus:ring-2 focus:ring-white focus:rounded-lg"
                 />
                 <input
                   type="number"
@@ -142,9 +142,9 @@ export default function AddCreditModal({
                   value={item.price}
                   onChange={(e) => updateCreditItem(index, 'price', e.target.value)}
                   required
-                  className="border border-[var(--color-border)] rounded-md p-2.5 text-[13px]"
+                  className="h-10 border border-[#dce0ea] rounded-md px-3 bg-white text-[#12172a] text-[13px] outline-none focus:border-[var(--color-primary-hover)] focus:ring-2 focus:ring-white focus:rounded-lg"
                 />
-                <strong className="text-xs text-right">
+                <strong className="text-sm text-right">
                   {peso(toMoney(item.quantity) * toMoney(item.price))}
                 </strong>
                 <button
@@ -185,13 +185,13 @@ export default function AddCreditModal({
             <button
               type="button"
               onClick={closeCreditModal}
-              className="h-9 rounded-md px-4 cursor-pointer font-extrabold bg-white border border-[var(--color-border)]"
+              className="h-9 rounded-md px-4 cursor-pointer text-[13px] font-extrabold bg-white border border-[var(--color-border)] hover:text-[var(--color-primary-hover)]"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="h-9 rounded-md px-4 cursor-pointer font-extrabold bg-[var(--color-primary-hover)] border-0 text-white"
+              className="h-9 rounded-md px-4 cursor-pointer text-[13px] font-extrabold bg-[var(--color-primary)] border-0 text-white hover:bg-[var(--color-primary-hover)]"
             >
               Save
             </button>

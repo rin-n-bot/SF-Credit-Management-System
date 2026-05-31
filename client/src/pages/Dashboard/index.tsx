@@ -144,29 +144,18 @@ export default function DashboardPage() {
       <div className="flex justify-between items-start mb-8 flex-wrap gap-4">
         <div>
           <h1 className="m-0 text-2xl font-bold text-[#12172a]">Dashboard</h1>
-          <p className="mt-[6px] mb-0 text-[#5f667a] text-sm">
+          <p className="mt-[6px] mb-0 text-[#5f667a] text-sm font-medium">
             Welcome back, {user?.full_name || 'Admin User'}.
           </p>
-          <p className="mt-[6px] mb-0 text-[#5f667a] text-sm">
+          <p className="mt-[2px] mb-0 text-[#5f667a] text-sm font-medium">
             Here's what's happening with your store today.
           </p>
-        </div>
-
-        <div className="flex gap-[18px] text-[#6b7280] text-xs items-center">
-          <span>
-            {new Date().toLocaleDateString('en-PH', {
-              month: 'short',
-              day: 'numeric',
-              year: 'numeric',
-            })}
-          </span>
-          <strong className="text-[#12172a]">{user?.username || 'Owner'}</strong>
         </div>
       </div>
 
       {/* ── Overview ── */}
       <section className="mb-8">
-        <h2 className="text-sm font-bold tracking-[0.07em] uppercase text-[#5f667a] m-0 mb-4">
+        <h2 className="text-sm font-semibold tracking-[0.04em] uppercase text-[#5f667a] m-0 mb-4">
           Overview
         </h2>
         <div className="grid grid-cols-4 gap-[18px] max-[1100px]:grid-cols-2 max-[760px]:grid-cols-1">
@@ -198,7 +187,7 @@ export default function DashboardPage() {
 
       {/* ── This Month ── */}
       <section className="mb-8">
-        <h2 className="text-sm font-bold tracking-[0.07em] uppercase text-[#5f667a] m-0 mb-4">
+        <h2 className="text-sm font-semibold tracking-[0.04em] uppercase text-[#5f667a] m-0 mb-4">
           This Month
         </h2>
         <div className="grid grid-cols-2 gap-[18px] max-[760px]:grid-cols-1">
@@ -219,7 +208,7 @@ export default function DashboardPage() {
 
       {/* ── Recent Activity ── */}
       <section className="mb-8">
-        <h2 className="text-sm font-bold tracking-[0.07em] uppercase text-[#5f667a] m-0 mb-4">
+        <h2 className="text-sm font-semibold tracking-[0.04em] uppercase text-[#5f667a] m-0 mb-4">
           Recent Activity
         </h2>
         <div className="grid grid-cols-3 gap-[18px] max-[1100px]:grid-cols-2 max-[760px]:grid-cols-1">

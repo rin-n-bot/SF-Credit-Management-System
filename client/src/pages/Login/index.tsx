@@ -47,16 +47,16 @@ export default function LoginPage() {
         <StoreIcon />
 
         <div className="text-center mt-[18px]">
-          <h1 className="m-0 text-2xl leading-tight font-extrabold">
+          <h1 className="m-0 text-2xl leading-tight font-bold">
             SF Sari-Sari Store
           </h1>
-          <p className="mt-2 text-[#5f667a] text-[13px] font-semibold">
+          <p className="mt-2 text-[#5f667a] text-[13px] font-medium">
             Credit Management System
           </p>
         </div>
 
         <form className="grid gap-[14px] mt-[26px]" onSubmit={handleSubmit}>
-          <label className="grid gap-[7px] text-[#20263a] text-xs font-medium">
+          <label className="grid gap-[7px] text-[#20263a] text-[13px] font-medium">
             Username
             <input
               value={username}
@@ -64,11 +64,11 @@ export default function LoginPage() {
               placeholder="Enter username"
               autoComplete="username"
               required
-              className="h-10 border border-[#dce0ea] rounded-md px-3 bg-white text-[#12172a] text-[13px] outline-none focus:border-[#5b50e6] focus:ring-2 focus:ring-white focus:rounded-lg"
+              className="h-10 border border-[#dce0ea] rounded-md px-3 bg-white text-[#12172a] text-[13px] outline-none focus:border-[#5b50e6] focus:ring-2 focus:ring-white focus:rounded-md"
             />
           </label>
 
-          <label className="grid gap-[7px] text-[#20263a] text-xs font-medium">
+          <label className="grid gap-[7px] text-[#20263a] text-[13px] font-medium">
             Password
             <input
               type="password"
@@ -77,7 +77,7 @@ export default function LoginPage() {
               placeholder="Enter password"
               autoComplete="current-password"
               required
-              className="h-10 border border-[#dce0ea] rounded-md px-3 bg-white text-[#12172a] text-[13px] outline-none focus:border-[#5b50e6] focus:ring-2 focus:ring-white focus:rounded-lg"
+              className="h-10 border border-[#dce0ea] rounded-md px-3 bg-white text-[#12172a] text-[13px] outline-none focus:border-[#5b50e6] focus:ring-2 focus:ring-white focus:rounded-md"
             />
           </label>
 
@@ -98,7 +98,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="h-[42px] rounded-md bg-[#141414] text-white text-[13px] font-extrabold cursor-pointer hover:bg-[#5b50e6] active:scale-[0.98] transition-colors duration-200 disabled:opacity-65 disabled:bg-[#5b50e6] disabled:cursor-wait"
+            className="h-[42px] rounded-md bg-[#141414] text-white text-[13px] font-semibold cursor-pointer hover:bg-[#5b50e6] active:scale-[0.98] transition-colors duration-200 disabled:opacity-65 disabled:bg-[#5b50e6] disabled:cursor-wait"
           >
             {isSubmitting ? (
               <span className="inline-block w-[18px] h-[18px] border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -108,18 +108,18 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="mt-[18px] text-[#6b7280] text-xs text-center">
+        <p className="mt-[18px] text-[#6b7280] text-[13px] font-medium text-center">
           First time setup?{' '}
           <Link
             to="/register"
-            className="text-[#141414] font-extrabold hover:text-[#5b50e6] hover:underline transition-all duration-200"
+            className="text-[#141414] font-bold hover:text-[#5b50e6] hover:underline transition-all duration-200"
           >
             Create owner account
           </Link>
         </p>
       </section>
 
-      <p className="fixed bottom-7 text-[#8a91a3] text-[11px]">
+      <p className="fixed bottom-7 text-[#8a91a3] text-xs">
         © 2026 SF Sari-Sari Store. All rights reserved.
       </p>
     </main>

@@ -54,10 +54,10 @@ export default function BalanceFilterSelect({ value, onChange, options }: Balanc
         ref={btnRef}
         type="button"
         onClick={handleOpen}
-        className={`h-[38px] min-w-[130px] border border-[#dce0ea] rounded-[6px] px-3 text-[13px] font-bold bg-white text-[#12172a] cursor-pointer flex items-center justify-between gap-2 ${open ? 'border-[#5b50e6]' : ''}`}
+        className={`h-[38px] min-w-[130px] border border-[#dce0ea] rounded-md px-3 text-xs font-semibold bg-white text-[#12172a] cursor-pointer flex items-center justify-between gap-2 focus:border-[#5b50e6] ${open ? 'border-[#5b50e6]' : ''}`}
       >
         {selected?.label}
-        <span className={`inline-block text-[16px] text-[#5f667a] transition-transform duration-150 ${open ? 'rotate-90' : '-rotate-90'}`}>
+        <span className={`inline-block text-base text-[#5f667a] transition-transform duration-150 ${open ? 'rotate-90' : '-rotate-90'}`}>
           ‹
         </span>
       </button>
@@ -73,7 +73,7 @@ export default function BalanceFilterSelect({ value, onChange, options }: Balanc
               key={opt.value}
               type="button"
               onClick={() => { onChange(opt.value); setOpen(false); }}
-              className={`block w-full px-[14px] py-[9px] text-left text-[13px] font-semibold border-0 cursor-pointer ${opt.value === value ? 'bg-[#141414] text-white' : 'bg-white text-[#12172a] hover:text-[#5b50e6]'}`}
+              className={`block w-full px-[14px] py-[9px] text-left text-xs font-semibold border-0 cursor-pointer ${opt.value === value ? 'bg-[#141414] text-white' : 'bg-white text-[#12172a] hover:text-[#5b50e6]'}`}
             >
               {opt.label}
             </button>

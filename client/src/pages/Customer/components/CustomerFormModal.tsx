@@ -25,20 +25,20 @@ export default function CustomerFormModal({
       <div className="bg-white w-[420px] max-w-[90%] rounded-[12px] p-6 shadow-[0_20px_35px_rgba(0,0,0,0.2)]">
 
         <div className="flex justify-between items-center mb-5">
-          <h2 className="m-0 text-[18px] font-black text-[#12172a]">
+          <h2 className="m-0 text-md font-black text-[#12172a]">
             {editingCustomer ? 'Edit Customer' : 'Add New Customer'}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="bg-transparent border-0 text-[20px] cursor-pointer text-[#12172a]"
+            className="bg-transparent border-0 text-2xl cursor-pointer text-[#12172a] font-medium"
           >
-            x
+            ×
           </button>
         </div>
 
         <form onSubmit={onSubmit} className="flex flex-col gap-4">
-          <label className="flex flex-col gap-[6px] font-bold text-xs text-[#12172a]">
+          <label className="flex flex-col gap-[6px] font-medium text-xs text-[#12172a]">
             Full Name
             <input
               value={formData.name}
@@ -49,7 +49,7 @@ export default function CustomerFormModal({
             />
           </label>
 
-          <label className="flex flex-col gap-[6px] font-bold text-xs text-[#12172a]">
+          <label className="flex flex-col gap-[6px] font-medium text-xs text-[#12172a]">
             Contact No.
             <input
               value={formData.contact_no}
@@ -60,7 +60,7 @@ export default function CustomerFormModal({
             />
           </label>
 
-          <label className="flex flex-col gap-[6px] font-bold text-xs text-[#12172a]">
+          <label className="flex flex-col gap-[6px] font-medium text-xs text-[#12172a]">
             Address
             <textarea
               value={formData.address || ''}
@@ -75,13 +75,13 @@ export default function CustomerFormModal({
             <button
               type="button"
               onClick={onClose}
-              className="bg-white border border-[#dce0ea] px-4 py-2 rounded-[6px] text-[13px] text-[#141414] cursor-pointer hover:border-[#dce0ea] hover:text-[#5b50e6] font-bold"
+              className="bg-white border border-[#dce0ea] px-4 py-2 rounded-md text-xs text-[#141414] cursor-pointer hover:border-[#dce0ea] hover:text-[#5b50e6] font-bold"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-[#141414] hover:bg-[#5b50e6] border-0 px-4 py-2 rounded-[6px] text-[13px] text-white font-bold cursor-pointer hover:opacity-90"
+              className="bg-[#141414] hover:bg-[#5b50e6] border-0 px-4 py-2 rounded-md text-xs text-white font-bold cursor-pointer hover:opacity-90"
             >
               {editingCustomer ? 'Save Changes' : 'Add'}
             </button>

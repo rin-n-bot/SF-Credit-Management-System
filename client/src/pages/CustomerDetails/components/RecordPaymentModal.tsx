@@ -77,20 +77,20 @@ export default function RecordPaymentModal({
 
         {/* Header */}
         <div className="flex justify-between gap-4 mb-[18px]">
-          <h2 className="m-0 text-lg font-black">Record Payment</h2>
+          <h2 className="m-0 text-[#12172a] text-md font-black">Record Payment</h2>
           <button
             type="button"
-            className="border-0 bg-transparent cursor-pointer text-xl leading-none"
+            className="border-0 bg-transparent cursor-pointer text-2xl leading-none font-medium"
             onClick={closePaymentModal}
           >
-            x
+            ×
           </button>
         </div>
 
         <form onSubmit={handleRecordPayment} className="flex flex-col gap-3.5">
 
           {/* Customer */}
-          <label className="flex flex-col gap-1.5 text-xs font-extrabold">
+          <label className="flex flex-col gap-1.5 text-xs font-medium">
             Customer
             <input
               value={customer.name}
@@ -100,19 +100,19 @@ export default function RecordPaymentModal({
           </label>
 
           {/* Payment date */}
-          <label className="flex flex-col gap-1.5 text-xs font-extrabold">
+          <label className="flex flex-col gap-1.5 text-xs font-medium">
             Payment Date
             <input
               type="date"
               value={paymentForm.pay_date}
               onChange={(e) => setPaymentForm({ ...paymentForm, pay_date: e.target.value })}
               required
-              className="border border-[var(--color-border)] rounded-md p-2.5 text-[13px]"
+              className="h-10 border border-[#dce0ea] rounded-md px-3 bg-white text-[#12172a] text-[13px] outline-none focus:border-[var(--color-primary-hover)] focus:ring-2 focus:ring-white focus:rounded-lg"
             />
           </label>
 
           {/* Amount paid */}
-          <label className="flex flex-col gap-1.5 text-xs font-extrabold">
+          <label className="flex flex-col gap-1.5 text-xs font-medium">
             Amount Paid
             <input
               type="number"
@@ -121,23 +121,23 @@ export default function RecordPaymentModal({
               value={paymentForm.amount_paid}
               onChange={(e) => setPaymentForm({ ...paymentForm, amount_paid: e.target.value })}
               required
-              className="border border-[var(--color-border)] rounded-md p-2.5 text-[13px]"
+              className="h-10 border border-[#dce0ea] rounded-md px-3 bg-white text-[#12172a] text-[13px] outline-none focus:border-[var(--color-primary-hover)] focus:ring-2 focus:ring-white focus:rounded-lg"
             />
           </label>
 
           {/* Payment preview */}
           <div className="grid gap-2 p-3 border border-[var(--color-border)] rounded-lg bg-[#fafbff]">
             <div className="flex justify-between gap-3 items-center">
-              <span className="text-[var(--color-text-muted)] text-[11px] font-extrabold">Current Balance</span>
+              <span className="text-[var(--color-text-muted)] text-xs font-extrabold">Current Balance</span>
               <strong className="text-xs font-black">{peso(accountSummary.totalBalance)}</strong>
             </div>
             <div className="flex justify-between gap-3 items-center">
-              <span className="text-[var(--color-text-muted)] text-[11px] font-extrabold">Amount Paid</span>
+              <span className="text-[var(--color-text-muted)] text-xs font-extrabold">Amount Paid</span>
               <strong className="text-xs font-black">{peso(paymentAmount)}</strong>
             </div>
             <div className="flex justify-between gap-3 items-center">
-              <span className="text-[var(--color-text-muted)] text-[11px] font-extrabold">Balance After Payment</span>
-              <strong className="text-xs font-black">{peso(balanceAfterPayment)}</strong>
+              <span className="text-[var(--color-text-muted)] text-xs font-extrabold">Balance After Payment</span>
+              <strong className="text-sm text-[var(--color-accent)]">{peso(balanceAfterPayment)}</strong>
             </div>
           </div>
 
@@ -161,7 +161,7 @@ export default function RecordPaymentModal({
                     CR-{String(row.creditId).padStart(5, '0')}
                   </span>
                   <span className="text-xs font-black">{peso(row.appliedAmount)}</span>
-                  <small className="text-[var(--color-text-muted)] text-[11px] font-extrabold">
+                  <small className="text-[var(--color-text-muted)] text-xs font-extrabold">
                     Remaining: {peso(row.balanceAfter)}
                   </small>
                 </div>
@@ -174,14 +174,14 @@ export default function RecordPaymentModal({
             <button
               type="button"
               onClick={closePaymentModal}
-              className="h-9 rounded-md px-4 cursor-pointer font-extrabold bg-white border border-[var(--color-border)]"
+              className="h-9 rounded-md px-4 cursor-pointer text-xs font-bold bg-white border border-[var(--color-border)] hover:text-[var(--color-primary-hover)]"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isPaymentInvalid}
-              className="h-9 rounded-md px-4 cursor-pointer font-extrabold bg-[var(--color-primary-hover)] border-0 text-white disabled:opacity-55 disabled:cursor-not-allowed"
+              className="h-9 rounded-md px-4 cursor-pointer text-xs font-bold bg-[var(--color-primary)] border-0 text-white disabled:opacity-55 disabled:cursor-not-allowed hover:bg-[var(--color-primary-hover)]"
             >
               Save Payment
             </button>

@@ -114,13 +114,13 @@ export default function CustomersTable({ customers, balanceByCustomer, onView, o
       <table className="w-full border-collapse table-fixed">
         <thead>
           <tr>
-            <th className="px-[10px] py-3 text-left text-[13px] text-[#5f667a] font-extrabold border-b border-[#edf0f5] w-[130px]">ID</th>
-            <th className="px-[10px] py-3 text-left text-[13px] text-[#5f667a] font-extrabold border-b border-[#edf0f5] w-[150px]">Name</th>
-            <th className="px-[10px] py-3 text-left text-[13px] text-[#5f667a] font-extrabold border-b border-[#edf0f5] w-[130px]">Contact</th>
-            <th className="px-[10px] py-3 text-left text-[13px] text-[#5f667a] font-extrabold border-b border-[#edf0f5] w-[200px]">Address</th>
-            <th className="px-[10px] py-3 text-center text-[13px] text-[#5f667a] font-extrabold border-b border-[#edf0f5] w-[110px]">Balance</th>
-            <th className="px-[10px] py-3 text-center text-[13px] text-[#5f667a] font-extrabold border-b border-[#edf0f5] w-[90px]">Status</th>
-            <th className="px-[10px] py-3 text-center text-[13px] text-[#5f667a] font-extrabold border-b border-[#edf0f5] w-[60px]">Action</th>
+            <th className="px-[10px] py-3 text-left text-sm text-[#5f667a] font-semibold border-b border-[#edf0f5] w-[130px]">ID</th>
+            <th className="px-[10px] py-3 text-left text-sm text-[#5f667a] font-semibold border-b border-[#edf0f5] w-[150px]">Name</th>
+            <th className="px-[10px] py-3 text-left text-sm text-[#5f667a] font-semibold border-b border-[#edf0f5] w-[130px]">Contact</th>
+            <th className="px-[10px] py-3 text-left text-sm text-[#5f667a] font-semibold border-b border-[#edf0f5] w-[200px]">Address</th>
+            <th className="px-[10px] py-3 text-center text-sm text-[#5f667a] font-semibold border-b border-[#edf0f5] w-[110px]">Balance</th>
+            <th className="px-[10px] py-3 text-center text-sm text-[#5f667a] font-semibold border-b border-[#edf0f5] w-[90px]">Status</th>
+            <th className="px-[10px] py-3 text-center text-sm text-[#5f667a] font-semibold border-b border-[#edf0f5] w-[60px]">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -130,26 +130,26 @@ export default function CustomersTable({ customers, balanceByCustomer, onView, o
 
             return (
               <tr key={customer.customer_id}>
-                <td className="px-[10px] py-3 text-[13px] text-[#12172a] font-medium border-b border-[#edf0f5]">
+                <td className="px-[10px] py-3 text-sm text-[#12172a] font-bold border-b border-[#edf0f5]">
                   CUST-{String(customer.customer_id).padStart(4, '0')}
                 </td>
-                <td className="px-[10px] py-3 text-[13px] text-[#12172a] font-medium border-b border-[#edf0f5]">
+                <td className="px-[10px] py-3 text-sm text-[#12172a] font-bold border-b border-[#edf0f5]">
                   {customer.name}
                 </td>
-                <td className="px-[10px] py-3 text-[13px] text-[#12172a] font-medium border-b border-[#edf0f5]">
+                <td className="px-[10px] py-3 text-sm text-[#12172a] font-bold border-b border-[#edf0f5]">
                   {customer.contact_no}
                 </td>
                 <td
                   title={customer.address || 'No address'}
-                  className="px-[10px] py-3 text-[13px] text-[#12172a] font-medium border-b border-[#edf0f5] whitespace-nowrap overflow-hidden text-ellipsis"
+                  className="px-[10px] py-3 text-sm text-[#12172a] font-bold border-b border-[#edf0f5] whitespace-nowrap overflow-hidden text-ellipsis"
                 >
                   {customer.address || 'No address'}
                 </td>
-                <td className={`px-[10px] py-3 text-[13px] font-medium border-b border-[#edf0f5] text-center ${hasBalance ? 'text-[#d92d20] !font-black' : 'text-[#12172a]'}`}>
+                <td className={`px-[10px] py-3 text-sm font-bold border-b border-[#edf0f5] text-center ${hasBalance ? 'text-[#d92d20] !font-black' : 'text-[#12172a]'}`}>
                   {peso(balance)}
                 </td>
-                <td className="px-[10px] py-3 text-[13px] border-b border-[#edf0f5] text-center">
-                  <span className={`inline-block px-2 py-1 rounded-[6px] text-[11px] font-extrabold ${hasBalance ? 'bg-[#def8e7] text-[#15803d]' : 'bg-[#e6f0ff] text-[#3155c8]'}`}>
+                <td className="px-[10px] py-3 text-xs border-b border-[#edf0f5] text-center">
+                  <span className={`inline-block px-2 py-1 rounded-[24px] text-sm font-bold ${hasBalance ? 'bg-[#def8e7] text-[#15803d]' : 'bg-[#e6f0ff] text-[#3155c8]'}`}>
                     {hasBalance ? 'Active' : 'Paid'}
                   </span>
                 </td>
